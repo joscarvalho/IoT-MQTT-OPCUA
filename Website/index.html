@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head onload="initDB()">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="module" src="fb.js"></script>  
+
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+
+</head>
+
+<body>
+        <h1 id="temp">Temperatura: 0</h1>
+
+        <h1 id="hum">Humidade: 0</h1>
+
+        <script type="text/javascript">
+            const data = {t:null, h:null}
+
+            var intervalId = setInterval(function() {
+                readData(1,data)
+                temp_val = data.t;
+                hum_val = data.h;
+
+                var ttext = document.getElementById("temp");
+                ttext.innerHTML = 'Temperatura: ' + temp_val;
+
+                var htext = document.getElementById("hum");
+                htext.innerHTML = 'Humidade: ' + hum_val;
+            }, 1000);
+        </script>
+
+    <table width="80%">
+        <tr>
+        <td><div id="tchart_div" style="border: 2px solid #ccc"></div></td>
+        </tr>
+        <tr>
+        <td><div id="hchart_div" style="border: 2px solid #ccc"></div></td>
+        </tr>
+    </table>
+
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script type="text/javascript">
+    window.onload = function () {
+        initDB();
+        // load current chart package
+      google.charts.load('current', {
+        packages: ['corechart', 'line'],
+      });
+      // set callback function when api loaded
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        // create data object with default value
+        let tdata = google.visualization.arrayToDataTable([
+          ['Tempo', 'Temperatura'],
+          [0, 0]
+        ]);
+        // create options object with titles, colors, etc.
+        let toptions = {
+          title: 'Temperatura',
+          colors: ['#e0440e'],
+          hAxis: {
+            title: 'Tempo [seg]',
+            titleTextStyle: {italic: false}
+          },
+          vAxis: {
+            title: 'Graus [ºC]',
+            titleTextStyle: {italic: false}
+          },
+        };
+
+        let hdata = google.visualization.arrayToDataTable([
+          ['Tempo', 'Humidade'],
+          [0, 0]
+        ]);
+        // create options object with titles, colors, etc.
+        let hoptions = {
+          title: 'Humidade',
+          hAxis: {
+            title: 'Tempo [seg]',
+            titleTextStyle: {italic: false}
+          },
+          vAxis: {
+            title: 'RH [%]',
+            titleTextStyle: {italic: false}
+          },
+        };
+
+        // draw chart on load
+        let tchart = new google.visualization.LineChart(
+          document.getElementById('tchart_div')
+        );
+        let hchart = new google.visualization.LineChart(
+          document.getElementById('hchart_div')
+        );
+        tchart.draw(tdata, toptions);
+        hchart.draw(hdata, hoptions);
+        // max amount of data rows that should be displayed
+        let maxDatas = 10;
+        // interval for adding new data every 250ms
+        let index = 0;
+        setInterval(function () {
+            // instead of this random, you can make an ajax call for the current cpu usage or what ever data you want to display
+            if (tdata.getNumberOfRows() > maxDatas) {
+              tdata.removeRows(0, tdata.getNumberOfRows() - maxDatas);
+            }
+            tdata.addRow([index, temp_val]);
+            tchart.draw(tdata, toptions);
+
+            if (hdata.getNumberOfRows() > maxDatas) {
+              hdata.removeRows(0, hdata.getNumberOfRows() - maxDatas);
+            }
+            hdata.addRow([index, hum_val]);
+            hchart.draw(hdata, hoptions);
+
+            index++;
+        }, 1000);
+      }}
+    </script>
+</body>
+
+</html>
