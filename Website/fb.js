@@ -3,13 +3,13 @@ import {getDatabase, ref, child, get, set} from "https://www.gstatic.com/firebas
 
 function initDB(){
     const firebaseConfig = {
-        apiKey: "AIzaSyBWn6HM7DSLfYc8_FYws8HdM7qPp0ysYb4",
-        authDomain: "projeto-di-76003.firebaseapp.com",
-        databaseURL: "https://projeto-di-76003-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "projeto-di-76003",
-        storageBucket: "projeto-di-76003.appspot.com",
-        messagingSenderId: "481206404599",
-        appId: "1:481206404599:web:cc28bcc576208264fd1af2"
+        apiKey: "...",
+        authDomain: "...",
+        databaseURL: "...",
+        projectId: "...",
+        storageBucket: "...",
+        messagingSenderId: "...",
+        appId: "..."
     };
     
     // Initialize Firebase
