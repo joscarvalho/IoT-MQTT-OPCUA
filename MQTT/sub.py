@@ -11,10 +11,10 @@ client_id = 'PC'
 
 # Firebase Config
 firebase_config = {
-    "apiKey": "AIzaSyBWn6HM7DSLfYc8_FYws8HdM7qPp0ysYb4",
-    "authDomain": "projeto-di-76003.firebaseapp.com",
-    "databaseURL": "https://projeto-di-76003-default-rtdb.europe-west1.firebasedatabase.app",
-    "storageBucket": "projeto-di-76003.appspot.com",
+    "apiKey": "...",
+    "authDomain": "...",
+    "databaseURL": "...",
+    "storageBucket": "...",
 }
 
 firebase = pyrebase.initialize_app(firebase_config)
